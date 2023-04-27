@@ -63,4 +63,22 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         return $username;
     }
+
+    public static function jsonResponse($is_error, $code , $message, $content)
+    {
+        $result = [];
+
+
+            if($is_error){
+                $result['success'] = false;
+                $result['code'] = $code;
+                $result['message'] = $message;
+            }else{
+                $result['result'] = $content; 
+                $result['success'] = true;
+                $result['code'] = $code;
+            }
+        return $result;
+        
+    }
 }

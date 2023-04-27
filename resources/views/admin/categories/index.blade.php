@@ -39,7 +39,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body table">
-          <table id="categoryTable" class="table table-bordered table-hover text-sm">
+          <table id="categoryTable" width="100%" class="table table-bordered table-hover text-sm">
             <thead>
             <tr>
               <th>Count</th>
@@ -65,20 +65,20 @@
                   </td>
                   <td>
                     <div class="btn-group">
-                      <a href="{{ route('categories.edit', $row->id) }}" class="btn  btn-primary btn-sm py-0" data-bs-toggle="modal" data-bs-target="#modal-update-category">Edit </a>
+                      <a href="{{ route('categories.edit', $row->id) }}" class="btn  btn-primary btn-sm py-0" data-bs-toggle="modal" data-bs-target="#modal-update-category"><i class="fas fa-edit"></i>  </a>
                       @if ($row->active == 1)
                         <form action="{{ route('categories.status', $row->id) }}" method="post">
                           @csrf
                           @method('PATCH')
                             <input type="hidden" name="active" value="2">
-                            <input type="submit" class="ml-1 btn btn-sm py-0 btn-warning" value="Deactivate">
+                            <button type="submit" class="ml-1 btn btn-sm py-0 btn-warning hover:bg-lime-400"><i class="fas fa-eye"></i></button>
                         </form>
                       @else
                         <form action="{{ route('categories.status', $row->id) }}" method="post">
                           @csrf
                           @method('PATCH')
                             <input type="hidden" name="active" value="1">
-                            <input type="submit" class="ml-1 btn btn-sm py-0 btn-secondary" value="Activate">
+                            <button type="submit" class="ml-1 btn btn-sm py-0 btn-secondary"><i class="fas fa-eye"></i></button>
                         </form>
                       @endif
                       </div>
@@ -137,9 +137,15 @@
  <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     
 <script>
-  let table = new DataTable('#categoryTable');
+  $(function () {
+    $("#categoryTable").DataTable({
+      responsive: true,
+      scrollY: true,
+      scrollX: true,
+    });
+  });
 </script>
-    
+
 <script>
     $('#modal-update-category').bind("show.bs.modal", function(e){
         var link = $(e.relatedTarget);
@@ -151,6 +157,7 @@
         $(this).find(".modal-body").load(link.attr("href"));
     })
 </script>
+
 
 @endpush
 

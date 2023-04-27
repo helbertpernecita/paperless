@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\AssessmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,20 @@ use App\Http\Controllers\Admin\DepartmentController;
 |
 */
 
+
+
+
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome');
+})->name('welcome');    
+
+Route::get('/url', function(){
+    return view('assessment.url');
+});
+
+
+Route::get('/first', [AssessmentController::class, 'firstUrl']);
+Route::get('/second', [AssessmentController::class, 'secondUrl']);
 
 Route::get('/auth/{provider}/redirect', [ProviderController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback']);
@@ -35,6 +47,7 @@ Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback'])
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -96,5 +109,7 @@ Route::middleware('auth')->group(function () {
     });
 
 });
+
+
 
 require __DIR__.'/auth.php';
